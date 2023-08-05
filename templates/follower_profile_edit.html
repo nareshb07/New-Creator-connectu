@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>    
+    <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js" defer></script>
+</head>
+<body>
+    <!-- whole  page -->
+    <div class="relative flex min-h-screen flex-col bg-slate-800">
+
+      <!-- Ribbon -->
+      <div class="h-14 w-full bg-slate-900">
+
+      </div>
+      <!-- ribbon ends here -->
+    
+      <div class="flex flex-1 flex-row">
+
+        <!-- laptop  Vertical Navigation Bar -->
+        <div class="hidden bg-slate-800 text-white font-bold sm:block sm:w-72 shadow-slate-600 shadow-lg">
+          <ul class="py-4">
+            <li class="text-center border-b border-gray-700 px-4 py-5 hover:bg-slate-700">Home</li>
+            <li class="text-center border-b border-gray-700 px-4 py-5 hover:bg-slate-700">About</li>
+            <li class="text-center border-b border-gray-700 px-4 py-5 hover:bg-slate-700">Services</li>
+            <li class="text-center border-b border-gray-700 px-4 py-5 hover:bg-slate-700">Contact</li>
+          </ul>
+        </div>
+        <!-- vertical nav bar ends here -->
+    
+         <!-- main content area -->
+        <div class="relative flex-1 bg-slate-800 px-6 pb-28 pt-10 shadow-slate-700 shadow-2xl ring-1 ring-gray-700 sm:mx-auto sm:max-w-[60%] sm:rounded-lg sm:px-10">
+          
+
+          <!-- section from profile pic to services -->
+          <div class="mx-auto max-w-xl ">
+            
+           <!-- profile image section -->
+            <div class="flex items-start justify-center">
+              <form action="{% url 'edit_creator_profile' %}" method="POST"  enctype="multipart/form-data">
+                {% csrf_token %}
+                <!-- profile image section -->
+                <div class="relative w-24 h-24">
+                  <img id="preview" class="w-full h-full object-cover rounded-full bg-slate-500" src="{{creator_profile.user.image.url}}" alt="Profile Picture">
+                  <label for="profile-pic" class="absolute bottom-0 right-0 flex justify-center items-center rounded-full cursor-pointer bg-blue-900 bg-opacity-50 hover:bg-opacity-70 p-2">
+                    <svg class="w-4 h-4 text-blue-100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    <input class="hidden" type="file" id="profile-pic" name="profile-pic" accept="image/*" onchange="previewImage(event)">
+                  </label>
+                </div>
+                <!-- profile image section --> 
+            </div>
+            <!-- profile image section -->
+
+
+             <!--name and username section -->
+            <div class="flex justify-center">
+            <div class="mt-4 text-center">
+             
+              <div class=" flex flex-col">
+              
+              <input  class = "placeholder:text-slate-600 text-white border-2 border-slate-500 px-4 py-2 text-bse font-bold rounded-xl mt-2 bg-inherit w-[20rem] text-center "type="text" id="name" placeholder = "Name :{{creator_profile.user.first_name}}" name="name" >
+              
+              <input class = "placeholder:text-slate-600 text-white border-2 border-slate-500 text-base px-4  py-2 font-bold rounded-xl mt-5 bg-inherit  min-w-44 text-center "type="text" id="name" placeholder = "username : {{creator_profile.user.username}}" name="username" >
+              
+              
+              
+            </div>
+            </div>
+            </div>
+             <!-- end of name and username section -->
+
+            <!-- About me , social profiles, service section -->
+            <div class="divide-y divide-gray-300/50 ">
+              <div class="space-y-6 py-8 text-base leading-7 text-gray-600">
+
+                  
+              </div>
+
+              <!-- update profile button -->
+              <div class = "pt-5 flex justify-center">
+              <input class="resize-none bg-yellow-400 hover:bg-yellow-300 px-5 py-3 text-black rounded-full font-bold text-base sm:text-xl" type="submit" value="Update profile">  
+            </div>
+             <!-- update profile button -->
+            
+              </form>
+             
+            </div>
+          </div>
+
+          <!-- change password button -->
+          <div onclick = "open_ChangePassword_modal()"  class="flex justify-center pt-10"> 
+            <button class="bg-transparent ring-1 ring-gray-400 px-4 py-3 rounded-full text-gray-400 font-bold"> Change Password </button>
+          </div>
+          <!-- change password button -->
+
+
+          <div   id = "end-chat-modal" class=" absolute inset-0 flex justify-center items-center">
+              <div class="hidden rounded-3xl bg-slate-900 px-14 py-10 backdrop-blur-3xl ">
+                <div class=" flex items-center justify-between rounded-t border-b p-2 dark:border-gray-600">
+                    <h3 class="text-xl  font-bold text-sky-50">Change Password</h3>
+                    <button onclick = "close_ChangePassword_modal()" class="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" >
+                      <svg aria-hidden="true" class="h-5 w-5" fill="#FFFFFF" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                      <span class="sr-only">Close modal</span>
+                    </button>
+                  </div>
+                <div>
+                  <form action="{% url 'edit_creator_profile' %}" method="POST"  enctype="multipart/form-data">
+                 {% csrf_token %} 
+                <div class="flex flex-col pt-4">
+                    <input  class = "placeholder:text-slate-600 text-white border-2 border-slate-500 px-4 py-2 text-bse font-bold rounded-xl mt-2 bg-inherit  text-center "type="Password" id="name" placeholder = "Current Password" name="name" >
+                  
+                  <input class = "placeholder:text-slate-600 text-white border-2 border-slate-500 text-base px-4  py-2 font-bold rounded-xl mt-5 bg-inherit  text-center "type="Password" id="name" placeholder = "New Password" name="username" >
+                </div>
+                  
+                  <div class="mt-6 flex justify-around">
+                  <input class="resize-none  px-5 py-3 hover:text-black hover:bg-gra rounded-full font-bold ring-1 bg-transparent text-base sm:text-xl ring-gray-400 text-gray-400" type="submit" value="Submit">  
+                  </div>
+                  
+                  </form>
+                </div> 
+
+                
+                  
+              </div>
+            </div>
+
+
+
+
+          <!--FAQ section -->
+        <div class="flex justify-center items-start my-2">
+          <div class="w-full">
+            <h2 class="text-xl text-white font-semibold text-vnet-blue mb-2">FAQ</h2>
+            <ul class="flex flex-col">
+              <li class="bg-white rounded-xl my-2 shadow-lg" x-data="accordion(1)">
+                <h2
+                  @click="handleClick()"
+                  class="flex flex-row justify-between items-center font-semibold p-3 cursor-pointer"
+                >
+                  <span>When will my order arrive?</span>
+                  <svg
+                    :class="handleRotate()"
+                    class="fill-current text-purple-700 h-6 w-6 transform transition-transform duration-500"
+                    viewBox="0 0 20 20">
+                    <path d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10"></path>
+                  </svg>
+                </h2>
+                <div
+                  x-ref="tab"
+                  :style="handleToggle()"
+                  class="border-l-2 border-purple-600 overflow-hidden max-h-0 duration-500 transition-all">
+                  <p class="p-3 text-gray-900">
+                    Shipping time is set by our delivery partners, according to the delivery method chosen by you. Additional details can be found in the order confirmation
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        </div>
+      </div>
+      
+    </div>
+
+    <div class= "sm:hidden flex justify-between h-20 min-w-full bg-slate-900 fixed bottom-0 left-0">
+
+      <svg class = "hover:bg-gray-700 ml-10 mr-5 h-8 w-8 mt-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill = "#FFFFFF" d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>
+      
+      <svg class = "ml-5 mr-5 h-8 w-8 mt-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill = "#FFFFFF" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+      <svg class = "ml-5 mr-5 h-8 w-8 mt-6" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 448 512"><path  fill = "#FFFFFF" d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+      <svg class = "ml-5 mr-10 h-8 w-8 mt-6" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 448 512"><path  fill = "#FFFFFF" d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+    </div>
+   
+  </body>
+  <script>
+    
+    ////for mobile menu //////
+    const open_menu = () => {
+      
+      document.getElementById("mobile-menu-icon").classList.add("hidden");
+      document.getElementById("cancel-icon").classList.remove("hidden");
+      document.getElementById("mobile-nav-bar").classList.remove("hidden");
+
+    };
+    const close_menu = () => {
+      
+      document.getElementById("mobile-menu-icon").classList.remove("hidden");
+      document.getElementById("cancel-icon").classList.add("hidden");
+      document.getElementById("mobile-nav-bar").classList.add("hidden");
+
+    };
+    ////for mobile menu //////
+
+ function previewImage(event) {
+  var input = event.target;
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('preview').src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+
+
+
+function autoExpand(textarea) {
+    textarea.style.height = 'auto';  // Reset the textarea height to auto to allow it to expand
+
+    // Set the height of the textarea to fit the content
+    textarea.style.height = (textarea.scrollHeight + 2) + 'px';
+}
+    document.addEventListener('alpine:init', () => {
+      Alpine.store('accordion', {
+        tab: 0
+      });
+      
+      Alpine.data('accordion', (idx) => ({
+        init() {
+          this.idx = idx;
+        },
+        idx: -1,
+        handleClick() {
+          this.$store.accordion.tab = this.$store.accordion.tab === this.idx ? 0 : this.idx;
+        },
+        handleRotate() {
+          return this.$store.accordion.tab === this.idx ? 'rotate-180' : '';
+        },
+        handleToggle() {
+          return this.$store.accordion.tab === this.idx ? `max-height: ${this.$refs.tab.scrollHeight}px` : '';
+        }
+      }));
+    })
+  </script>
+</html>  

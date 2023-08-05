@@ -1,0 +1,19 @@
+<div class="hidden bg-slate-800 font-bold  text-white shadow-sm shadow-slate-600 xl:block sm:min-w-[20%] ">
+    <ul class="py-4">
+      <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Home</li>
+      {% if request.user.is_Creator%}
+      <a href="{% url 'dashboard' %}">
+        <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Dashboard</li>
+      </a>
+      {% endif %}
+      <a href="{% url 'home' %}" > 
+      <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700"> Messages</li>
+      </a>
+      <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Services</li>
+      <li class="border-b border-gray-700 px-4 py-5 text-center hover:bg-slate-700">Contact</li>
+      <li class="border-b border-gray-700 px-4 py-5 flex flex-row justify-center itext-center hover:bg-slate-700">
+        
+        <img src = "{{request.user.image.url}}" alt = "profile pic" class="h-14 w-14 rounded-full">
+        <p class="flex items-center px-6">{{request.user.first_name}}</p></li>
+    </ul>
+  </div>

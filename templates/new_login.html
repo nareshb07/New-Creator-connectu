@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Page</title>
+    <!-- Link the Tailwind CSS stylesheet -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="flex min-h-screen items-center justify-center bg-gray-700">
+      <div class="w-full max-w-sm rounded-lg bg-gray-800 p-8 shadow-md">
+        <h1 class="mb-6 text-center text-2xl font-bold text-white">Login</h1>
+
+        <form action="{% url 'chats:login' %}" method="POST" novalidate>
+            {% csrf_token %}
+          <!-- Email/Username Label -->
+          <label for="email" class="mb-2 block text-sm font-medium text-gray-500">Email or Username</label>
+          <input type="text" id="email" name="email" class="mb-4 w-full rounded-lg border px-3 py-2 focus:border-blue-300 focus:outline-none focus:ring" placeholder="Enter your email or username" required />
+          
+          <!-- Password Label -->
+          <label for="password" class="mb-2 block text-sm font-medium text-gray-500">Password</label>
+          <input type="password" id="password" name="password" class="mb-6 w-full rounded-lg border px-3 py-2 focus:border-blue-300 focus:outline-none focus:ring" placeholder="Enter your password" required />
+          
+          {% if messages %}                          
+            {% for message in messages %}
+              <h1 class="pb-4 text-red-600">{{ message }} </h1>
+            {% endfor %}
+          {% endif %}
+          <!-- messages  -->
+          
+          
+
+
+          <!-- Login Button -->
+          <button type="submit" class="w-full rounded-lg bg-blue-500 px-4 py-2 text-white transition duration-300 hover:bg-blue-600">Login</button>
+        </form>
+
+        <!-- forgot Password -->
+        <a href="{% url 'chats:forget_password' %}"><p class="pt-4 text-center text-blue-400 hover:text-blue-600">Forgot password ?</p></a>
+
+        <!-- OR Separator -->
+        <div class="flex my-4 items-center justify-center">
+          <div class="w-full border-t border-gray-400"></div>
+          <div class="px-3 text-gray-500">OR</div>
+          <div class="w-full border-t border-gray-400"></div>
+        </div>
+
+          <!-- Login with Google Button -->
+          {% load socialaccount %}
+              {% block content %}
+                  <a href="{% provider_login_url 'google' %}"><button class="w-full rounded-lg bg-red-600 px-4 py-2 text-white transition duration-300 hover:bg-red-700">Login with Google</button></a>
+          {% endblock content %}
+        <!-- Other links, forgot password, etc. can be added here -->
+
+        <h1 class="mt-4 text-center text-white"> Don't have an account? <a href = "{% url 'chats:register' %}" class="font-semibold hover:text-blue-600 text-blue-400"> Sign up </a></h1>
+      </div>
+     
+    </div>
+    
+  </body>
+</html>

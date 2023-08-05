@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>    
+    <script defer src="https://unpkg.com/alpinejs@3.2.3/dist/cdn.min.js" defer></script>
+</head>
+<body>
+    <!-- whole  page -->
+    <div class="relative flex min-h-screen flex-col bg-slate-800">
+
+      <!-- Ribbon -->
+      <div class="h-14 w-full bg-slate-900">
+
+      </div>
+      <!-- ribbon ends here -->
+    
+      <div class="flex flex-1 flex-row">
+
+        <!-- laptop  Vertical Navigation Bar -->
+        <div class="hidden bg-slate-800 text-white font-bold sm:block sm:w-72 shadow-slate-600 shadow-lg">
+          <ul class="py-4">
+            <li class="text-center border-b border-gray-700 px-4 py-5 hover:bg-slate-700">Home</li>
+            <li class="text-center border-b border-gray-700 px-4 py-5 hover:bg-slate-700">About</li>
+            <li class="text-center border-b border-gray-700 px-4 py-5 hover:bg-slate-700">Services</li>
+            <li class="text-center border-b border-gray-700 px-4 py-5 hover:bg-slate-700">Contact</li>
+          </ul>
+        </div>
+        <!-- vertical nav bar ends here -->
+    
+         <!-- main content area -->
+        <div class="relative flex-1 bg-slate-800 px-6 pb-28 pt-10 shadow-slate-700 shadow-2xl ring-1 ring-gray-700 sm:mx-auto sm:max-w-[60%] sm:rounded-lg sm:px-10">
+            {% for feedback in user_feedback_obj %}
+              <div class="pb-2 ">
+                
+                  
+                  <div class="flex flex-row bg-slate-700 text-slate-400 rounded-xl hover:rounded-b-none justify-around">
+                  <p class="pl-4 font-bold py-2"><b>{{feedback.Follower.first_name}} </b>@{{feedback.Follower.username}}</p>                  
+                  <p class="py-2 px-4"> Rating : {{feedback.Rating}} / 5 </p>
+                  <p onclick="toggleDeleteButton('{{feedback.id}}')" class="py-2 px-2"> <svg
+                    
+                    class="fill-current text-slate-400 h-6 w-6 transform transition-transform duration-500"
+                    viewBox="0 0 20 20"
+                  ><path d="M13.962,8.885l-3.736,3.739c-0.086,0.086-0.201,0.13-0.314,0.13S9.686,12.71,9.6,12.624l-3.562-3.56C5.863,8.892,5.863,8.611,6.036,8.438c0.175-0.173,0.454-0.173,0.626,0l3.25,3.247l3.426-3.424c0.173-0.172,0.451-0.172,0.624,0C14.137,8.434,14.137,8.712,13.962,8.885 M18.406,10c0,4.644-3.763,8.406-8.406,8.406S1.594,14.644,1.594,10S5.356,1.594,10,1.594S18.406,5.356,18.406,10 M17.521,10c0-4.148-3.373-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.148,17.521,17.521,14.147,17.521,10"></path>
+                </svg> </p>
+
+                 
+                  </div>
+
+                  <div id = "feedback_modal" FeedbackId = "{{feedback.id}}" class="hidden feedback_modal dark:bg-slate-900 rounded-t-none rounded-b-xl py-4 px-6">
+                    <p class="py-2 px-5 text-slate-300"> {{feedback.Feedback}} </p>
+                  </div>
+
+              </div>
+              {% endfor %}
+
+             
+
+              
+
+                            
+
+          
+
+          
+                  
+        </div> 
+
+                
+                  
+              </div>
+            </div>
+
+
+
+
+          
+       
+
+
+        </div>
+      </div>
+      
+    </div>
+
+    <div class= "sm:hidden flex justify-between h-20 min-w-full bg-slate-900 fixed bottom-0 left-0">
+
+      <svg class = "hover:bg-gray-700 ml-10 mr-5 h-8 w-8 mt-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill = "#FFFFFF" d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>
+      
+      <svg class = "ml-5 mr-5 h-8 w-8 mt-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill = "#FFFFFF" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+      <svg class = "ml-5 mr-5 h-8 w-8 mt-6" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 448 512"><path  fill = "#FFFFFF" d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+      <svg class = "ml-5 mr-10 h-8 w-8 mt-6" xmlns="http://www.w3.org/2000/svg"viewBox="0 0 448 512"><path  fill = "#FFFFFF" d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+    </div>
+   
+  </body>
+
+</html>  
+
+<script>
+     
+
+    function toggleDeleteButton(id) {
+    
+    const modal = document.querySelector(`.feedback_modal[FeedbackId="${id}"]`);
+    
+    modal.classList.toggle('hidden');
+  }
+    
+
+</script>
